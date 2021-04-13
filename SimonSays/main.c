@@ -15,7 +15,7 @@
 #include "rgb.h"
 
 static int level = 1; //Level for the user
-const int maxLevel = 10; //Max level for the user
+const int maxLevel = 3; //Max level for the user
 
 void wait(int ms)
 {
@@ -51,6 +51,7 @@ void wait_for_sequence(char* answer)
 	int previousButton = 0;		//Int to remember the previous pressed button
 	bool released = true;		//Bool to check if the previous button is released
 	
+	// Keep checking if button is pressed until you have the same amount as the level
 	while(presses < level)
 	{
 		if(PINA & (1<<4) && released)
@@ -79,6 +80,7 @@ void wait_for_sequence(char* answer)
 			previousButton = 7;
 		}
 		
+		// If the previous button that was pressed is released, the next button can be pressed
 		if(!(PINA & (1<<previousButton)))
 		{
 			released = true;
