@@ -15,6 +15,7 @@
 #include "rgb.h"
 
 static int level = 1; //Level for the user
+const int maxLevel = 10; //Max level for the user
 
 void wait(int ms)
 {
@@ -39,10 +40,7 @@ void show_sequence(char* sequence)
 	setLedColor(0, 255, 0);
 	for(int i = 0; i < level; i++)
 	{
-		setLedOn(sequence[i]);
-		wait(500);
-		setLedOff(sequence[i]);
-		wait(500);
+		blinkLed(sequence[i], 500);
 	}
 }
 
@@ -106,16 +104,13 @@ int main(void)
 {
 	rgbLedInit();
 	
-	char *sequence = malloc(10);
-	char *answer = malloc(10);
+	char *sequence = malloc(maxLevel);
+	char *answer = malloc(maxLevel);
 	
 	
 	// Show green leds
 	setLedColor(0, 0, 255);
-	setAllLedOn();
-	wait(2000);
-	setAllLedOff();
-	wait(2000);
+	blinkAllLed(2000);
 	
     while (1) 
     {
@@ -128,18 +123,12 @@ int main(void)
 			//Show green leds to tell the answer was correct
 			level++;
 			setLedColor(0, 0, 255);
-			setAllLedOn();
-			wait(2000);
-			setAllLedOff();
-			wait(2000);
-			if(level > 10)
+			blinkAllLed(2000);
+			if(level > maxLevel)
 			{
 				//Show white leds to tell the game is finished
 				setLedColor(100, 100, 100);
-				setAllLedOn();
-				wait(2000);
-				setAllLedOff();
-				wait(2000);
+				blinkAllLed(2000);
 				level = 1;
 			}
 		} else
@@ -147,10 +136,7 @@ int main(void)
 			//Show red leds to tell the answer was not correct
 			level = 1;
 			setLedColor(255, 0, 0);
-			setAllLedOn();
-			wait(2000);
-			setAllLedOff();
-			wait(2000);
+			blinkAllLed(2000);
 		}
     }
 }

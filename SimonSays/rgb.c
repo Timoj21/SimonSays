@@ -4,8 +4,19 @@
  * Created: 12-4-2021 15:56:05
  *  Author: timoj
  */ 
+#define F_CPU 8e6
+
 #include <avr/io.h>
+#include <util/delay.h>
 #include "rgb.h"
+
+void rgbWait(int ms)
+{
+	for(int i = 0; i < ms; i++)
+	{
+		_delay_ms(1);
+	}
+}
 
 //Init the rgb leds
 void rgbLedInit(void)
@@ -41,6 +52,15 @@ void setLedOff(unsigned char ledValue)
 	PORTA |= (1<<ledValue);
 }
 
+// Blink a single led for a specific time
+void blinkLed(unsigned char ledValue, int time)
+{
+	PORTA &= ~(1<<ledValue);
+	rgbWait(time);
+	PORTA |= (1<<ledValue);
+	rgbWait(time);
+}
+
 // Set all the leds on
 void setAllLedOn (void)
 {
@@ -51,4 +71,13 @@ void setAllLedOn (void)
 void setAllLedOff (void)
 {
 	PORTA = 0x0F;
+}
+
+// Blink all leds for a specific time
+void blinkAllLed(int time)
+{
+	PORTA = 0x00;
+	rgbWait(time);
+	PORTA = 0x0F;
+	rgbWait(time);
 }

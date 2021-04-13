@@ -26,11 +26,16 @@ void setLedOn(unsigned char ledValue);
 // Set specific led off
 void setLedOff(unsigned char ledValue);
 
+// Blink a single led for a specific time
+void blinkLed(unsigned char ledValue, int time);
+
 // Set all the leds on
 void setAllLedOn (void);
 
 // Set all the leds off
 void setAllLedOff (void);
 
+// Blink all leds for a specific time
+void blinkAllLed(int time);
 
 #endif /* RGB_H_ */
